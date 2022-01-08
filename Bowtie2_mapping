@@ -1,4 +1,5 @@
 #!/bin/bash
+# Mapping sequencing data to hg38 with bowtie2, followed by transforming sam file to bam file, removing duplicate and indexing bam file with samtools. For more information, please refer to bowtie2 and samtools mannual.
 #$ -cwd
 #$ -v PATH,LD_LIBRARY_PATH,CLASSPATH
 #$ -l m_mem_free=10G
