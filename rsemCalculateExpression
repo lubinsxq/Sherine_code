@@ -1,0 +1,20 @@
+#!/bin/bash
+#BSUB -J myjobMPI
+#BSUB -n 12
+#BSUB -R span[ptile=12]
+#BSUB -R rusage[mem=12]
+#BSUB -W 20:00
+#BSUB -o %J.stdout
+#BSUB -eo %J.stderr
+humanRef=/data/abdelwao-lab/bin/RNA_seq/Index_RNA_Seq/RSEM_index/ref/hg38Ref/hg38_ref
+mouseRef=/data/abdelwao-lab/bin/RNA_seq/Index_RNA_Seq/RSEM_index/ref/mm10Ref/mm10_ref
+
+ for i in *S93*R1*val_1.fq.gz
+ do
+         echo $i
+         R2=${i/R1_001_val_1/R2_001_val_2}
+         echo $R2
+         name=${i/_R1_001_val_1.fq.gz/}
+         echo $name
+         rsem-calculate-expression  -bowtie2 --append-names --sort-bam-by-coordinate --output-genome-bam --phred33-quals --bowtie2-sensitivity-level "very_sensitive" -p 12 --paired-end $i $R2  ${humanRef} ${name}_rsem
+ done
